@@ -649,7 +649,6 @@
   font-size:11px; color:var(--forest); font-weight:700; margin-top:2px; margin-bottom:2px;
   display:inline-block;
 }
-.spec-ref::before{content:"§ "; opacity:.7;}
 
 </style>
 </head>
@@ -724,10 +723,6 @@
 
     <div class="session-picker" id="sessionPicker"></div>
 
-    <div class="intensive-note flow-hidden" id="intensiveNote">
-      All 5 units above are also covered together in the Intensive Recap on <strong>24–25 August 2026</strong> — see <a href="upcoming.html">Upcoming Courses</a> for that confirmed date, or <a href="format.html">How It Works</a> for format details.
-    </div>
-
     <div class="browse-again">
       <button type="button" id="browseAgainBtn">+ Browse another subject / level / board</button>
     </div>
@@ -783,11 +778,11 @@ const SESSION_DETAILS = {
   },
   "business|as|cambridge": {
     "Business Structure & Objectives": ["Enterprise", "Business structure", "Size of business", "Business objectives"],
-    "Stakeholders & External Influences": ["Stakeholders in a business", "External influences on business activity (PESTLE factors)"],
-    "People in Organisations": ["Management & leadership", "Motivation", "Human resource management", "Organisational structure", "Business communication"],
+    "Stakeholders & External Influences": ["Stakeholders in a business"],
+    "People in Organisations": ["Management & leadership", "Motivation", "Human resource management"],
     "Marketing": ["Meeting customer needs", "Market research", "Marketing mix", "Market segmentation"],
-    "Operations and Project Management": ["Production methods", "Quality management", "Project management", "Procurement"],
-    "Finance and Accounting": ["Sources of finance", "Financial planning", "Financial statements", "Ratio analysis", "Investment appraisal"],
+    "Operations and Project Management": ["Production methods", "Procurement"],
+    "Finance and Accounting": ["Sources of finance", "Financial planning"],
     "Paper 1 Exam Accelerator": ["Data response, all topics"],
     "Paper 2 Case Study Accelerator": ["Case study technique"],
   },
@@ -814,7 +809,7 @@ const SESSION_DETAILS = {
   "economics|as|pearson": {
     "The Economic Problem": ["Scarcity, choice, opportunity cost", "Factors of production", "Production possibility curves (PPCs)", "Positive vs normative statements", "Specialisation"],
     "Demand & Supply": ["Consumer behaviour, utility, diminishing marginal utility", "Factors affecting demand, demand curves & shifts", "Supply, supply shifts", "Market equilibrium & disequilibrium"],
-    "Elasticity": ["PED, YED, XED, PES", "Elasticity calculations", "Revenue (total, average, marginal)", "Interpreting elasticity data"],
+    "Elasticity": ["PED, YED, XED, PES", "Elasticity calculations", "Total revenue", "Interpreting elasticity data"],
     "Market Failure & Government Intervention": ["Externalities, public goods, merit & demerit goods, information failure", "Taxes, subsidies, maximum/minimum prices, buffer stocks, regulation, government failure"],
     "Measures of Economic Performance": ["GDP and measuring economic growth", "Inflation (causes, measurement, consequences)", "Unemployment (types, causes, measurement)", "Balance of payments as a measure", "Index numbers"],
     "The AD/AS Model": ["Aggregate demand", "Aggregate supply (short-run and long-run)", "Equilibrium national income", "The multiplier"],
@@ -827,7 +822,7 @@ const SESSION_DETAILS = {
     "Basic Economic Ideas & Resource Allocation": ["Scarcity, PPCs", "Resource allocation in market/planned/mixed economies", "Classification of goods"],
     "Demand & Supply": ["Demand, supply", "Price determination"],
     "Elasticity": ["Price elasticity of demand & supply", "Calculations", "Interpretation"],
-    "Government Microeconomic Intervention": ["Market failure", "Externalities", "Government intervention methods"],
+    "Government Microeconomic Intervention": ["Reasons for intervention: public goods, merit & demerit goods, price control", "Government intervention methods"],
     "National Income & the AD/AS Model": ["National income", "Aggregate demand & aggregate supply"],
     "Growth, Employment & Inflation": ["Economic growth", "Employment & unemployment", "Inflation"],
     "Government Macroeconomic Policy": ["Macro policy objectives", "Fiscal policy", "Monetary policy", "Supply-side policy"],
@@ -846,6 +841,66 @@ const SPEC_REFS = {
     "Business Finance": "Pearson 4BS1, Section 3 (3.1–3.5)",
     "Marketing": "Pearson 4BS1, Section 4 (4.1–4.3)",
     "Business Operations": "Pearson 4BS1, Section 5 (5.1–5.4)"
+  },
+  "economics|igcse|pearson": {
+    "The Economic Problem & Markets": "Pearson 4EC1, Section 1.1 (1.1.1–1.1.3)",
+    "Elasticity & Market Failure": "Pearson 4EC1, Section 1.1 (1.1.4–1.1.6)",
+    "Business Economics": "Pearson 4EC1, Section 1.2 (1.2.1–1.2.6)",
+    "Macro Objectives & the Economic Cycle": "Pearson 4EC1, Section 2.1.1",
+    "Government Policy": "Pearson 4EC1, Section 2.1 (2.1.2–2.1.3)",
+    "The Global Economy": "Pearson 4EC1, Section 2.2 (2.2.1–2.2.3)"
+  },
+  "business|as|pearson": {
+    "Meeting Customer Needs & The Market": "Pearson Business IAS, Unit 1 (1.3.1–1.3.2)",
+    "Marketing Mix & Strategy": "Pearson Business IAS, Unit 1, Section 1.3.3",
+    "Managing People: Entrepreneurs & Leaders": "Pearson Business IAS, Unit 1 (1.3.4–1.3.5)",
+    "Raising Finance & Financial Planning": "Pearson Business IAS, Unit 2 (2.3.1–2.3.2)",
+    "Managing Finance": "Pearson Business IAS, Unit 2, Section 2.3.3",
+    "Resource Management & External Influences": "Pearson Business IAS, Unit 2 (2.3.4–2.3.5)"
+  },
+  "business|as|cambridge": {
+    "Business Structure & Objectives": "Cambridge 9609, Topics 1.1–1.4",
+    "Stakeholders & External Influences": "Cambridge 9609, Topic 1.5",
+    "People in Organisations": "Cambridge 9609, Topics 2.1–2.3",
+    "Marketing": "Cambridge 9609, Topics 3.1–3.3",
+    "Operations and Project Management": "Cambridge 9609, Topics 4.1–4.2",
+    "Finance and Accounting": "Cambridge 9609, Topics 5.2–5.5"
+  },
+  "economics|as|pearson": {
+    "The Economic Problem": "Pearson Economics IAS, Unit 1, Section 1.3.1",
+    "Demand & Supply": "Pearson Economics IAS, Unit 1 (1.3.2–1.3.3)",
+    "Elasticity": "Pearson Economics IAS, Unit 1 (1.3.2–1.3.3, elasticity topics)",
+    "Market Failure & Government Intervention": "Pearson Economics IAS, Unit 1 (1.3.5–1.3.6)",
+    "Measures of Economic Performance": "Pearson Economics IAS, Unit 2, Section 2.3.1",
+    "The AD/AS Model": "Pearson Economics IAS, Unit 2 (2.3.2–2.3.4)",
+    "Macroeconomic Objectives & the Economic Cycle": "Pearson Economics IAS, Unit 2 (2.3.5–2.3.6)",
+    "Policy Masterclass": "Pearson Economics IAS, Unit 2, Section 2.3.6"
+  },
+  "business|igcse|cambridge": {
+    "Understanding Business Activity": "Cambridge 0450, Section 1 (1.1–1.5)",
+    "People in Business": "Cambridge 0450, Section 2 (2.1–2.4)",
+    "Marketing": "Cambridge 0450, Section 3 (3.1–3.4)",
+    "Operations Management": "Cambridge 0450, Section 4 (4.1–4.4)",
+    "Financial Information & Decision Making": "Cambridge 0450, Section 5 (5.1–5.5)",
+    "External Influences on Business": "Cambridge 0450, Section 6 (6.1–6.3)"
+  },
+  "economics|igcse|cambridge": {
+    "The Basic Economic Problem": "Cambridge 0455, Section 1 (1.1–1.4) + 2.1",
+    "The Allocation of Resources": "Cambridge 0455, Section 2 (2.2–2.8)",
+    "Firms and Production": "Cambridge 0455, Section 3 (3.5–3.6)",
+    "Government and the Macroeconomy": "Cambridge 0455, Section 4 (4.1–4.8)",
+    "Economic Development": "Cambridge 0455, Section 5 (5.1–5.4)",
+    "International Trade and Globalisation": "Cambridge 0455, Section 6 (6.1–6.4)"
+  },
+  "economics|as|cambridge": {
+    "Basic Economic Ideas & Resource Allocation": "Cambridge 9708, Topic 1 (1.1–1.6)",
+    "Demand & Supply": "Cambridge 9708, Topics 2.1, 2.4",
+    "Elasticity": "Cambridge 9708, Topics 2.2–2.3",
+    "Government Microeconomic Intervention": "Cambridge 9708, Topics 3.1–3.2",
+    "National Income & the AD/AS Model": "Cambridge 9708, Topics 4.1–4.3",
+    "Growth, Employment & Inflation": "Cambridge 9708, Topics 4.4–4.6",
+    "Government Macroeconomic Policy": "Cambridge 9708, Topics 5.1–5.4",
+    "International Economic Issues": "Cambridge 9708, Topics 6.1–6.5"
   }
 };
 
@@ -965,6 +1020,51 @@ function renderSessions() {
   const picker = document.getElementById('sessionPicker');
   picker.innerHTML = '';
 
+  const INTENSIVE_OPTIONS = {
+    'business|igcse': {
+      name: 'Full-Year Recap — All 5 Units',
+      date: '24–25 August 2026'
+    }
+  };
+
+  function buildIntensiveGroup() {
+    const key = subject + '|' + level;
+    const option = INTENSIVE_OPTIONS[key];
+    if (!option) return;
+
+    const groupLabel = document.createElement('div');
+    groupLabel.className = 'group-label';
+    groupLabel.textContent = 'Intensive (1)';
+    picker.appendChild(groupLabel);
+
+    const id = 'intensive||' + key;
+    const row = document.createElement('div');
+    row.className = 'session-pick-row';
+    row.dataset.id = id;
+    if (cart.find(c => c.id === id)) row.classList.add('is-checked');
+
+    const topics = data.fundamentals; // condensed key topics = the 5 unit titles
+
+    row.innerHTML = '<span class="checkbox-square"></span><span class="name">' + option.name +
+      ' <button type="button" class="info-toggle">What\'s covered?</button></span>' +
+      '<span class="meta"><span class="price placeholder-text">[PRICE]</span><span class="date-tbc" style="color:var(--forest); font-style:normal; font-weight:600;">' + option.date + '</span></span>' +
+      '<div class="session-detail"><ul>' + topics.map(t => '<li>' + t + '</li>').join('') + '</ul></div>';
+
+    row.addEventListener('click', (e) => {
+      if (e.target.classList.contains('info-toggle')) {
+        e.stopPropagation();
+        const detail = row.querySelector('.session-detail');
+        if (detail) detail.classList.toggle('show');
+        return;
+      }
+      toggleCartItem({
+        id, tier: 'intensive',
+        label: LABELS[subject] + ' — ' + LABELS[level] + ' — Intensive Recap (' + option.date + ')'
+      }, row);
+    });
+    picker.appendChild(row);
+  }
+
   function buildGroup(tier, label, items) {
     const groupLabel = document.createElement('div');
     groupLabel.className = 'group-label' + (tier === 'accelerator' ? ' accelerator' : '');
@@ -1004,12 +1104,9 @@ function renderSessions() {
     });
   }
 
+  buildIntensiveGroup();
   buildGroup('fundamentals', 'Fundamentals', data.fundamentals);
   buildGroup('accelerator', 'Accelerator', data.accelerator);
-
-  const intensiveNote = document.getElementById('intensiveNote');
-  if (subject === 'business' && level === 'igcse') intensiveNote.classList.remove('flow-hidden');
-  else intensiveNote.classList.add('flow-hidden');
 }
 
 document.getElementById('browseAgainBtn').addEventListener('click', () => {
