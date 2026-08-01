@@ -322,6 +322,11 @@
   color:var(--navy); padding-bottom:3px; border-bottom:2px solid transparent;
 }
 .site-nav a:hover, .site-nav a.active{border-bottom-color:var(--sky);}
+.site-nav a.nav-login-link{
+  border:1.5px solid var(--navy); border-bottom:1.5px solid var(--navy);
+  padding:8px 16px; color:var(--navy);
+}
+.site-nav a.nav-login-link:hover{background:var(--navy); color:#fff; border-color:var(--navy);}
 
 /* Home: link-out cards */
 .link-cards{
@@ -359,11 +364,15 @@
   font-size:11px; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
   color:var(--sky); margin-bottom:14px;
 }
-.format-card h3{font-size:24px; margin-bottom:14px;}
-.format-card .row{display:flex; justify-content:space-between; padding:12px 0; border-top:1px solid #eef1f0; font-size:14px;}
+.format-card h3{font-size:24px; margin-bottom:12px;}
+.format-card .desc{font-size:13.5px; color:#4a5b57; line-height:1.55; margin-bottom:20px;}
+.format-card .row{
+  display:flex; align-items:baseline; gap:8px; padding:11px 0;
+  border-top:1px solid #eef1f0; font-size:14px; line-height:1.4;
+}
 .format-card .row:first-of-type{border-top:none;}
-.format-card .row .k{color:#6b7c78;}
-.format-card .row .v{font-weight:600; text-align:right;}
+.format-card .row .k{color:#8b968f; font-size:11px; letter-spacing:.04em; text-transform:uppercase; font-weight:700; flex-shrink:0; width:78px;}
+.format-card .row .v{font-weight:500; color:var(--navy);}
 
 .benefits-band{background:var(--gray); padding:60px 32px;}
 .benefits-band .inner{max-width:1180px; margin:0 auto;}
@@ -380,14 +389,16 @@
 /* Tutor page */
 .tutor-grid{
   display:grid; grid-template-columns:.8fr 1.2fr; gap:60px;
-  padding:20px 32px 110px; max-width:1180px; margin:0 auto; align-items:start;
+  padding:20px 32px 10px; max-width:1180px; margin:0 auto; align-items:start;
 }
 .tutor-photo{aspect-ratio:4/5; background:var(--gray); border:1.5px dashed #cfd9d6; display:flex; align-items:center; justify-content:center; color:#8b968f; font-size:13px; text-align:center; padding:20px;}
 .tutor-name{font-size:30px; margin-bottom:6px;}
 .tutor-role{font-size:14px; color:var(--forest); font-weight:600; margin-bottom:26px;}
 .tutor-block{margin-bottom:24px;}
+.tutor-block:last-child{margin-bottom:0;}
 .tutor-block h4{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#8b968f; font-weight:700; margin-bottom:10px;}
-.tutor-block p, .tutor-block li{font-size:15px; color:#3d5450; line-height:1.6;}
+.tutor-block p, .tutor-block li{font-size:15px; color:#3d5450; line-height:1.6; margin-bottom:12px;}
+.tutor-block p:last-child{margin-bottom:0;}
 .placeholder-text{color:#a9b6b0; font-style:italic;}
 
 /* Session cards */
@@ -649,7 +660,39 @@
   font-size:11px; color:var(--forest); font-weight:700; margin-top:2px; margin-bottom:2px;
   display:inline-block;
 }
-.spec-ref::before{content:"§ "; opacity:.7;}
+
+/* Framed pull-quote variant, used on tutor page to avoid a dead gap */
+.tutor-quote-band{
+  background:var(--seafoam); padding:36px 32px 50px; margin-top:0;
+}
+.tutor-quote-band .inner{max-width:700px; margin:0 auto; text-align:center;}
+.tutor-quote-band .tick{width:16px; height:3px; background:var(--lime); margin:0 auto 20px; transform:rotate(-20deg);}
+.tutor-quote-band p{font-family:'Fraunces', serif; font-style:italic; font-size:23px; line-height:1.35; color:var(--forest);}
+
+.tutor-photo-framed{border:1px solid var(--navy); padding:6px;}
+.tutor-photo-framed img{display:block;}
+
+/* Tutor credentials strip */
+.credential-strip{
+  display:grid; grid-template-columns:repeat(2,1fr); gap:14px;
+  margin:22px 0 30px; padding:20px; background:var(--gray);
+}
+.credential-item{display:flex; align-items:flex-start; gap:10px; font-size:13.5px; color:var(--navy); line-height:1.4;}
+.credential-item .icon{font-size:17px; flex-shrink:0; line-height:1;}
+.credential-item strong{font-weight:600;}
+
+@media (max-width:600px){
+  .credential-strip{grid-template-columns:1fr;}
+}
+
+/* Card footer link */
+.format-card .card-link{
+  display:inline-flex; align-items:center; gap:8px; margin-top:20px;
+  font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; font-weight:700;
+  color:var(--forest); padding-top:16px; border-top:1px solid #eef1f0; width:100%;
+}
+.format-card .card-link svg{width:14px; height:14px; transition:transform .15s ease;}
+.format-card .card-link:hover svg{transform:translateX(3px);}
 
 </style>
 </head>
@@ -667,6 +710,7 @@
       <a href="tutor.html">Your Tutor</a>
       <a href="upcoming.html">Upcoming Courses</a>
       <a href="sessions.html">Book a Session</a>
+      <a href="login.html" class="nav-login-link">Log In</a>
     </nav>
   </div>
 </header>

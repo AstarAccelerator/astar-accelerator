@@ -322,6 +322,11 @@
   color:var(--navy); padding-bottom:3px; border-bottom:2px solid transparent;
 }
 .site-nav a:hover, .site-nav a.active{border-bottom-color:var(--sky);}
+.site-nav a.nav-login-link{
+  border:1.5px solid var(--navy); border-bottom:1.5px solid var(--navy);
+  padding:8px 16px; color:var(--navy);
+}
+.site-nav a.nav-login-link:hover{background:var(--navy); color:#fff; border-color:var(--navy);}
 
 /* Home: link-out cards */
 .link-cards{
@@ -359,11 +364,15 @@
   font-size:11px; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
   color:var(--sky); margin-bottom:14px;
 }
-.format-card h3{font-size:24px; margin-bottom:14px;}
-.format-card .row{display:flex; justify-content:space-between; padding:12px 0; border-top:1px solid #eef1f0; font-size:14px;}
+.format-card h3{font-size:24px; margin-bottom:12px;}
+.format-card .desc{font-size:13.5px; color:#4a5b57; line-height:1.55; margin-bottom:20px;}
+.format-card .row{
+  display:flex; align-items:baseline; gap:8px; padding:11px 0;
+  border-top:1px solid #eef1f0; font-size:14px; line-height:1.4;
+}
 .format-card .row:first-of-type{border-top:none;}
-.format-card .row .k{color:#6b7c78;}
-.format-card .row .v{font-weight:600; text-align:right;}
+.format-card .row .k{color:#8b968f; font-size:11px; letter-spacing:.04em; text-transform:uppercase; font-weight:700; flex-shrink:0; width:78px;}
+.format-card .row .v{font-weight:500; color:var(--navy);}
 
 .benefits-band{background:var(--gray); padding:60px 32px;}
 .benefits-band .inner{max-width:1180px; margin:0 auto;}
@@ -676,6 +685,15 @@
   .credential-strip{grid-template-columns:1fr;}
 }
 
+/* Card footer link */
+.format-card .card-link{
+  display:inline-flex; align-items:center; gap:8px; margin-top:20px;
+  font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; font-weight:700;
+  color:var(--forest); padding-top:16px; border-top:1px solid #eef1f0; width:100%;
+}
+.format-card .card-link svg{width:14px; height:14px; transition:transform .15s ease;}
+.format-card .card-link:hover svg{transform:translateX(3px);}
+
 </style>
 </head>
 <body>
@@ -692,6 +710,7 @@
       <a href="tutor.html" class="active">Your Tutor</a>
       <a href="upcoming.html">Upcoming Courses</a>
       <a href="sessions.html">Book a Session</a>
+      <a href="login.html" class="nav-login-link">Log In</a>
     </nav>
   </div>
 </header>
