@@ -221,10 +221,7 @@
 
 <div class="top">
   <a href="index.html" class="brand">A* Accelerator</a>
-  <div style="display:flex; align-items:center; gap:18px;">
-    <button type="button" id="shareBtn" class="share-btn">Share link</button>
-    <a href="sessions.html" class="exit">Exit</a>
-  </div>
+  <a href="sessions.html" class="exit">Exit</a>
 </div>
 
 <div class="shell">
@@ -382,17 +379,15 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 </script>
 <script>
-document.getElementById('shareBtn').addEventListener('click', async () => {
-  const btn = document.getElementById('shareBtn');
-  try {
-    await navigator.clipboard.writeText(window.location.href);
-    btn.textContent = 'Link copied!';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Share link'; btn.classList.remove('copied'); }, 2000);
-  } catch (e) {
-    prompt('Copy this link to share:', window.location.href);
+  // If this link was shared from My Account, it carries ?student=NAME — show who it's for
+  const urlParams = new URLSearchParams(window.location.search);
+  const linkedStudentName = urlParams.get('student');
+  if (linkedStudentName) {
+    const banner = document.createElement('div');
+    banner.style.cssText = 'max-width:640px; margin:0 auto; padding:12px 20px; background:var(--seafoam); color:var(--forest); font-size:13.5px; font-weight:600; text-align:center; border-radius:16px; margin-top:10px;';
+    banner.textContent = 'Diagnostic for ' + decodeURIComponent(linkedStudentName);
+    document.querySelector('.shell').insertBefore(banner, document.querySelector('.hero-block'));
   }
-});
 </script>
 <script>
 const TOPICS = [
@@ -581,6 +576,7 @@ async function showResults() {
 
   const payload = {
     course: 'IGCSE Business — Pearson Edexcel',
+    student_name: linkedStudentName ? decodeURIComponent(linkedStudentName) : null,
     target_grade: document.getElementById('targetGrade').value,
     current_grade: document.getElementById('currentGrade').value,
     perceived_grade: document.getElementById('perceivedGrade').value,

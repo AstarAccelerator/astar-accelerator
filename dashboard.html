@@ -694,6 +694,67 @@
 .format-card .card-link svg{width:14px; height:14px; transition:transform .15s ease;}
 .format-card .card-link:hover svg{transform:translateX(3px);}
 
+/* ============================================================ */
+/* Diagnostic tool                                                */
+/* ============================================================ */
+.diag-progress{display:flex; gap:6px; margin-bottom:36px;}
+.diag-progress .seg{flex:1; height:4px; background:#e0e6e4;}
+.diag-progress .seg.done{background:var(--forest);}
+.diag-progress .seg.current{background:var(--sky);}
+
+.diag-step{display:none;}
+.diag-step.active{display:block;}
+.diag-step .step-tag{font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; font-weight:700; color:var(--forest); margin-bottom:8px;}
+.diag-step h2{font-size:26px; margin-bottom:10px;}
+.diag-step .step-desc{font-size:14px; color:#6b7c78; margin-bottom:30px; max-width:520px;}
+
+.confidence-row{
+  border:1.5px solid #e7ebe9; padding:20px; margin-bottom:14px;
+}
+.confidence-row .topic-name{font-weight:600; font-size:15px; color:var(--navy); margin-bottom:14px;}
+.confidence-scale{display:flex; gap:8px;}
+.confidence-scale label{
+  flex:1; text-align:center; cursor:pointer;
+}
+.confidence-scale input{position:absolute; opacity:0;}
+.confidence-scale .dot{
+  width:100%; padding:12px 4px; border:1.5px solid #dde5e2; font-size:12px; font-weight:600; color:#8b968f;
+  transition:all .15s ease;
+}
+.confidence-scale input:checked + .dot{background:var(--sky); border-color:var(--sky); color:var(--navy);}
+.confidence-labels{display:flex; justify-content:space-between; font-size:10.5px; color:#a9b6b0; margin-top:8px;}
+
+.quiz-q{border-bottom:1px solid #eef1f0; padding:22px 0;}
+.quiz-q:first-child{padding-top:0;}
+.quiz-q .qnum{font-size:11px; color:var(--forest); font-weight:700; letter-spacing:.04em; text-transform:uppercase; margin-bottom:8px;}
+.quiz-q .qtext{font-size:15px; color:var(--navy); font-weight:500; margin-bottom:14px;}
+.quiz-opt{display:flex; align-items:center; gap:10px; padding:10px 0; cursor:pointer; font-size:14px;}
+.quiz-opt input{width:16px; height:16px; accent-color:var(--forest); flex-shrink:0;}
+
+.tech-row{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 0; border-bottom:1px solid #eef1f0;}
+.tech-row .label{font-size:14px; color:var(--navy); max-width:60%;}
+
+.diag-nav{display:flex; justify-content:space-between; margin-top:36px; gap:16px;}
+.diag-nav button{padding:14px 26px; font-weight:600; font-size:14px; border:none; cursor:pointer;}
+.diag-nav .btn-back{background:var(--gray); color:var(--navy);}
+.diag-nav .btn-next{background:var(--sky); color:var(--navy);}
+
+.results-hero{text-align:center; padding:20px 0 40px;}
+.results-hero .big-stat{font-family:'Fraunces', serif; font-size:56px; color:var(--forest); font-weight:600;}
+.results-hero .big-stat-label{font-size:13px; color:#6b7c78; text-transform:uppercase; letter-spacing:.06em; font-weight:700;}
+
+.topic-result{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:16px 20px; border:1.5px solid #e7ebe9; margin-bottom:10px;
+}
+.topic-result.flag{border-color:var(--sky); background:rgba(126,200,255,.06);}
+.topic-result .name{font-weight:600; font-size:14.5px; color:var(--navy);}
+.topic-result .bars{display:flex; gap:16px; font-size:12px; color:#6b7c78; margin-top:4px;}
+.topic-result .bars b{color:var(--navy);}
+.topic-result .book-link{
+  font-size:12px; font-weight:700; color:var(--forest); text-decoration:underline; white-space:nowrap; flex-shrink:0;
+}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -717,9 +778,9 @@
     <button id="logoutBtn">Log out</button>
   </div>
 
-  <div class="cart-panel show" style="margin-bottom:30px;">
-    <h4>Your Diagnostic</h4>
-    <p style="font-size:13.5px; color:#4a5b57; line-height:1.5;" class="placeholder-text">Coming soon — a short pre-assessment will appear here once a booking is confirmed, to help identify strengths and gaps before the first session.</p>
+  <div id="diagnosticLinksSection" style="margin-bottom:30px;">
+    <h2 style="font-size:18px; margin-bottom:10px;">Your Diagnostic Links</h2>
+    <div id="diagnosticLinks"><p class="empty-state">Loading...</p></div>
   </div>
 
   <h2 style="font-size:18px; margin-bottom:16px;">My Bookings</h2>
@@ -758,14 +819,17 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_
       .order('created_at', { ascending: false });
 
     const list = document.getElementById('bookingsList');
+    const linksEl = document.getElementById('diagnosticLinks');
 
     if (error) {
       list.innerHTML = `<p class="empty-state">Couldn't load bookings: ${error.message}</p>`;
+      linksEl.innerHTML = '<p class="empty-state">Diagnostic links appear here once you have a booking.</p>';
       return;
     }
 
     if (!bookings || bookings.length === 0) {
       list.innerHTML = '<p class="empty-state">No bookings yet. Book your first programme below.</p>';
+      linksEl.innerHTML = '<p class="empty-state">Diagnostic links appear here once you have a booking.</p>';
       return;
     }
 
@@ -778,6 +842,39 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_
         <div class="status">${b.status}</div>
       </div>
     `).join('');
+
+    // Build one diagnostic link per unique student on the account
+    const uniqueStudents = [...new Set(bookings.map(b => b.student_name).filter(Boolean))];
+    const basePath = window.location.href.replace(/dashboard\.html.*$/, '');
+
+    linksEl.innerHTML = uniqueStudents.map(name => {
+      const link = basePath + 'diagnostic-business-igcse-pearson.html?student=' + encodeURIComponent(name);
+      const inputId = 'link_' + name.replace(/[^a-z0-9]/gi, '_');
+      return `
+        <div class="cart-panel show" style="margin-bottom:14px;">
+          <h4>${name}'s Diagnostic</h4>
+          <div style="display:flex; gap:8px; margin:10px 0;">
+            <input id="${inputId}" type="text" readonly value="${link}" style="flex:1; font-size:12.5px; padding:10px 12px; border:1.5px solid #e3e8e6; border-radius:10px; color:#4a5b57;">
+            <button type="button" class="btn-copy-link" data-target="${inputId}" style="padding:10px 18px; background:var(--sky); color:var(--navy); border:none; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; white-space:nowrap;">Copy</button>
+          </div>
+          <p style="font-size:12.5px; color:#8b968f; line-height:1.5;">This link is specific to <strong>${name}</strong> — please don't share it with anyone else. Send it directly to ${name} to complete.</p>
+        </div>
+      `;
+    }).join('');
+
+    document.querySelectorAll('.btn-copy-link').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const input = document.getElementById(btn.dataset.target);
+        try {
+          await navigator.clipboard.writeText(input.value);
+          const original = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = original; }, 2000);
+        } catch (e) {
+          input.select();
+        }
+      });
+    });
   })();
 
   document.getElementById('logoutBtn').addEventListener('click', async () => {
