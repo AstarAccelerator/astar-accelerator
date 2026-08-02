@@ -834,7 +834,7 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Replace with the real admin email — must match an "Admin can view all ..." RLS policy in Supabase (see README)
-const ADMIN_EMAIL = "YOUR_ADMIN_EMAIL@example.com";
+const ADMIN_EMAIL = "a.star.accelerator@gmail.com";
 </script>
 <script>
   document.querySelectorAll('.admin-tab').forEach(tab => {
@@ -873,7 +873,8 @@ const ADMIN_EMAIL = "YOUR_ADMIN_EMAIL@example.com";
     if (!rows || rows.length === 0) { el.innerHTML = '<p class="empty-state">No diagnostics submitted yet.</p>'; return; }
     el.innerHTML = rows.map(d => `
       <div class="admin-card">
-        <div class="top-line"><span class="name">${d.email || 'Anonymous'}</span><span class="date">${fmtDate(d.created_at)}</span></div>
+        <div class="top-line"><span class="name">${d.student_name || d.email || 'Unlinked submission'}</span><span class="date">${fmtDate(d.created_at)}</span></div>
+        ${d.student_name && d.email ? `<div class="row"><span class="k">Email</span><span class="v">${d.email}</span></div>` : ''}
         <div class="row"><span class="k">Course</span><span class="v">${d.course || '—'}</span></div>
         <div class="row"><span class="k">Target grade</span><span class="v">${d.target_grade || '—'}</span></div>
         <div class="row"><span class="k">Predicted grade</span><span class="v">${d.current_grade || '—'}</span></div>
