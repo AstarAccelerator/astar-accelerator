@@ -466,8 +466,28 @@
   .tutor-grid{grid-template-columns:1fr;}
   .launch-grid{grid-template-columns:1fr;}
   .course-grid{grid-template-columns:1fr 1fr;}
-  .site-nav{display:none;}
+
+  .nav-toggle{display:flex;}
+  .site-nav{
+    display:flex; flex-direction:column; align-items:stretch; gap:0;
+    position:fixed; top:0; right:0; height:100vh; width:78%; max-width:320px;
+    background:#fff; padding:100px 32px 32px; box-shadow:-10px 0 40px rgba(11,29,41,.15);
+    transform:translateX(100%); transition:transform .3s ease; z-index:200; overflow-y:auto;
+  }
+  .site-nav.open{transform:translateX(0);}
+  .site-nav a{width:100%; padding:16px 0; border-bottom:1px solid #eef1f0; font-size:16px;}
+  .site-nav a.nav-login-link{margin-top:16px; text-align:center; border:1.5px solid var(--navy); border-bottom:1.5px solid var(--navy);}
 }
+.nav-toggle{
+  display:none; background:none; border:none; cursor:pointer; padding:8px;
+  flex-direction:column; gap:5px; z-index:210; margin-right:32px;
+}
+.nav-toggle span{display:block; width:24px; height:2px; background:var(--navy); transition:transform .2s ease, opacity .2s ease;}
+.nav-toggle.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-toggle.active span:nth-child(2){opacity:0;}
+.nav-toggle.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.nav-overlay{display:none; position:fixed; inset:0; background:rgba(11,29,41,.4); z-index:190;}
+.nav-overlay.open{display:block;}
 @media (max-width:480px){
   .benefits-grid{grid-template-columns:1fr;}
   .course-grid{grid-template-columns:1fr;}
@@ -694,6 +714,67 @@
 .format-card .card-link svg{width:14px; height:14px; transition:transform .15s ease;}
 .format-card .card-link:hover svg{transform:translateX(3px);}
 
+/* ============================================================ */
+/* Diagnostic tool                                                */
+/* ============================================================ */
+.diag-progress{display:flex; gap:6px; margin-bottom:36px;}
+.diag-progress .seg{flex:1; height:4px; background:#e0e6e4;}
+.diag-progress .seg.done{background:var(--forest);}
+.diag-progress .seg.current{background:var(--sky);}
+
+.diag-step{display:none;}
+.diag-step.active{display:block;}
+.diag-step .step-tag{font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; font-weight:700; color:var(--forest); margin-bottom:8px;}
+.diag-step h2{font-size:26px; margin-bottom:10px;}
+.diag-step .step-desc{font-size:14px; color:#6b7c78; margin-bottom:30px; max-width:520px;}
+
+.confidence-row{
+  border:1.5px solid #e7ebe9; padding:20px; margin-bottom:14px;
+}
+.confidence-row .topic-name{font-weight:600; font-size:15px; color:var(--navy); margin-bottom:14px;}
+.confidence-scale{display:flex; gap:8px;}
+.confidence-scale label{
+  flex:1; text-align:center; cursor:pointer;
+}
+.confidence-scale input{position:absolute; opacity:0;}
+.confidence-scale .dot{
+  width:100%; padding:12px 4px; border:1.5px solid #dde5e2; font-size:12px; font-weight:600; color:#8b968f;
+  transition:all .15s ease;
+}
+.confidence-scale input:checked + .dot{background:var(--sky); border-color:var(--sky); color:var(--navy);}
+.confidence-labels{display:flex; justify-content:space-between; font-size:10.5px; color:#a9b6b0; margin-top:8px;}
+
+.quiz-q{border-bottom:1px solid #eef1f0; padding:22px 0;}
+.quiz-q:first-child{padding-top:0;}
+.quiz-q .qnum{font-size:11px; color:var(--forest); font-weight:700; letter-spacing:.04em; text-transform:uppercase; margin-bottom:8px;}
+.quiz-q .qtext{font-size:15px; color:var(--navy); font-weight:500; margin-bottom:14px;}
+.quiz-opt{display:flex; align-items:center; gap:10px; padding:10px 0; cursor:pointer; font-size:14px;}
+.quiz-opt input{width:16px; height:16px; accent-color:var(--forest); flex-shrink:0;}
+
+.tech-row{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 0; border-bottom:1px solid #eef1f0;}
+.tech-row .label{font-size:14px; color:var(--navy); max-width:60%;}
+
+.diag-nav{display:flex; justify-content:space-between; margin-top:36px; gap:16px;}
+.diag-nav button{padding:14px 26px; font-weight:600; font-size:14px; border:none; cursor:pointer;}
+.diag-nav .btn-back{background:var(--gray); color:var(--navy);}
+.diag-nav .btn-next{background:var(--sky); color:var(--navy);}
+
+.results-hero{text-align:center; padding:20px 0 40px;}
+.results-hero .big-stat{font-family:'Fraunces', serif; font-size:56px; color:var(--forest); font-weight:600;}
+.results-hero .big-stat-label{font-size:13px; color:#6b7c78; text-transform:uppercase; letter-spacing:.06em; font-weight:700;}
+
+.topic-result{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:16px 20px; border:1.5px solid #e7ebe9; margin-bottom:10px;
+}
+.topic-result.flag{border-color:var(--sky); background:rgba(126,200,255,.06);}
+.topic-result .name{font-weight:600; font-size:14.5px; color:var(--navy);}
+.topic-result .bars{display:flex; gap:16px; font-size:12px; color:#6b7c78; margin-top:4px;}
+.topic-result .bars b{color:var(--navy);}
+.topic-result .book-link{
+  font-size:12px; font-weight:700; color:var(--forest); text-decoration:underline; white-space:nowrap; flex-shrink:0;
+}
+
 </style>
 </head>
 <body>
@@ -705,15 +786,17 @@
   </a>
   <div class="header-rule"></div>
   <div class="header-nav">
-    <nav class="site-nav">
+    <nav class="site-nav" id="siteNav">
       <a href="format.html" class="active">How It Works</a>
       <a href="tutor.html">Your Tutor</a>
       <a href="upcoming.html">Upcoming Courses</a>
       <a href="sessions.html">Book a Session</a>
       <a href="login.html" class="nav-login-link">Log In</a>
     </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   </div>
 </header>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <div class="page-intro">
   <div class="tick"></div>
@@ -784,5 +867,20 @@
   <span>Understand</span><span class="dot"></span><span>Apply</span><span class="dot"></span><span>Achieve</span>
 </footer>
 
+<script>
+(function(){
+  var navToggle = document.getElementById('navToggle');
+  var siteNav = document.getElementById('siteNav');
+  var navOverlay = document.getElementById('navOverlay');
+  if (!navToggle || !siteNav || !navOverlay) return;
+  function closeNav(){ siteNav.classList.remove('open'); navToggle.classList.remove('active'); navOverlay.classList.remove('open'); }
+  function openNav(){ siteNav.classList.add('open'); navToggle.classList.add('active'); navOverlay.classList.add('open'); }
+  navToggle.addEventListener('click', function(){
+    if (siteNav.classList.contains('open')) closeNav(); else openNav();
+  });
+  navOverlay.addEventListener('click', closeNav);
+  siteNav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeNav); });
+})();
+</script>
 </body>
 </html>
